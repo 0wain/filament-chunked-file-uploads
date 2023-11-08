@@ -1,0 +1,27 @@
+{
+    "name": "owainjones74/filament-file-upload-chunked",
+    "description": "Filament file uploads with support for chunking",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "OwainJones74\\FilamentFileUploadChunked\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Owain Jones"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "filament/support": "^3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OwainJones74\\FilamentFileUploadChunked\\FilamentFileUploadChunkedServiceProvider"
+            ]
+        }
+    }
+}
