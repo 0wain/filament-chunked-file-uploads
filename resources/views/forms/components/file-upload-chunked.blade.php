@@ -19,8 +19,8 @@
 
     <div
         ax-load
-        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('file-upload', 'filament/forms') }}"
-        x-data="fileUploadFormComponent1({
+        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('file-upload-chunked', 'owainjones74/filament-file-upload-chunked') }}"
+        x-data="fileUploadFormComponentChunked({
                     acceptedFileTypes: @js($getAcceptedFileTypes()),
                     imageEditorEmptyFillColor: @js($getImageEditorEmptyFillColor()),
                     imageEditorMode: @js($getImageEditorMode()),
@@ -76,6 +76,7 @@
                             progress,
                         )
                     },
+                    chunkSize: 10000000,
                 })"
         wire:ignore
         x-ignore

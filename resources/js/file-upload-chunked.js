@@ -22,45 +22,49 @@ FilePond.registerPlugin(FilePondPluginMediaPreview)
 
 window.FilePond = FilePond
 
-export default function fileUploadFormComponent1({
-                                                    acceptedFileTypes,
-                                                    imageEditorEmptyFillColor,
-                                                    imageEditorMode,
-                                                    imageEditorViewportHeight,
-                                                    imageEditorViewportWidth,
-                                                    deleteUploadedFileUsing,
-                                                    isDisabled,
-                                                    getUploadedFilesUsing,
-                                                    imageCropAspectRatio,
-                                                    imagePreviewHeight,
-                                                    imageResizeMode,
-                                                    imageResizeTargetHeight,
-                                                    imageResizeTargetWidth,
-                                                    imageResizeUpscale,
-                                                    isAvatar,
-                                                    hasImageEditor,
-                                                    isDownloadable,
-                                                    isOpenable,
-                                                    isPreviewable,
-                                                    isReorderable,
-                                                    loadingIndicatorPosition,
-                                                    locale,
-                                                    maxSize,
-                                                    minSize,
-                                                    panelAspectRatio,
-                                                    panelLayout,
-                                                    placeholder,
-                                                    removeUploadedFileButtonPosition,
-                                                    removeUploadedFileUsing,
-                                                    reorderUploadedFilesUsing,
-                                                    shouldAppendFiles,
-                                                    shouldOrientImageFromExif,
-                                                    shouldTransformImage,
-                                                    state,
-                                                    uploadButtonPosition,
-                                                    uploadProgressIndicatorPosition,
-                                                    uploadUsing,
-                                                }) {
+console.log('fileUploadFormComponentChunked');
+export default function fileUploadFormComponentChunked({
+                                                           acceptedFileTypes,
+                                                           imageEditorEmptyFillColor,
+                                                           imageEditorMode,
+                                                           imageEditorViewportHeight,
+                                                           imageEditorViewportWidth,
+                                                           deleteUploadedFileUsing,
+                                                           isDisabled,
+                                                           getUploadedFilesUsing,
+                                                           imageCropAspectRatio,
+                                                           imagePreviewHeight,
+                                                           imageResizeMode,
+                                                           imageResizeTargetHeight,
+                                                           imageResizeTargetWidth,
+                                                           imageResizeUpscale,
+                                                           isAvatar,
+                                                           hasImageEditor,
+                                                           isDownloadable,
+                                                           isOpenable,
+                                                           isPreviewable,
+                                                           isReorderable,
+                                                           loadingIndicatorPosition,
+                                                           locale,
+                                                           maxSize,
+                                                           minSize,
+                                                           panelAspectRatio,
+                                                           panelLayout,
+                                                           placeholder,
+                                                           removeUploadedFileButtonPosition,
+                                                           removeUploadedFileUsing,
+                                                           reorderUploadedFilesUsing,
+                                                           shouldAppendFiles,
+                                                           shouldOrientImageFromExif,
+                                                           shouldTransformImage,
+                                                           state,
+                                                           uploadButtonPosition,
+                                                           uploadProgressIndicatorPosition,
+                                                           uploadUsing,
+                                                           chunkSize
+                                                       }) {
+    console.log('123');
+
     return {
         fileKeyIndex: {},
 
@@ -83,6 +87,7 @@ export default function fileUploadFormComponent1({
         editor: {},
 
         init: async function () {
+            console.log(112233);
             FilePond.setOptions(locales[locale] ?? locales['en'])
 
             this.pond = FilePond.create(this.$refs.input, {
@@ -112,6 +117,9 @@ export default function fileUploadFormComponent1({
                 stylePanelAspectRatio: panelAspectRatio,
                 stylePanelLayout: panelLayout,
                 styleProgressIndicatorPosition: uploadProgressIndicatorPosition,
+                chunkUploads: true,
+                //chunkSize,
+                chunkForce: true,
                 server: {
                     load: async (source, load) => {
                         let response = await fetch(source, {
@@ -145,17 +153,44 @@ export default function fileUploadFormComponent1({
                             ).toString(16),
                         )
 
-                        uploadUsing(
-                            fileKey,
-                            file,
-                            (fileKey) => {
-                                this.shouldUpdateState = true
+                        console.log(1)
 
-                                load(fileKey)
-                            },
-                            error,
-                            progress,
-                        )
+                        const self = this;
+                        function uploadChunk(file, start)
+                        {
+                            const chunkEnd  = Math.min( start + chunkSize, file.size );
+                            const chunk     = file.slice( start, chunkEnd );
+
+                            console.log('uploadChunk', file.size, chunkSize, start, chunkEnd, chunk);
+
+                            uploadUsing(
+                                fileKey,
+                                chunk,
+                                (fileKey) => {
+                                    if(chunkEnd >= file.size) {
+                                        self.shouldUpdateState = true
+
+                                        load(fileKey)
+                                    }
+                                },
+                                error,
+                                (event) => {
+                                    if (event.detail.progress == 100) {
+                                        start = chunkEnd;
+                                        if(start < file.size){
+                                            console.log('uploading next chunk');
+                                            uploadChunk(file, start)
+                                        } else {
+                                            progress(event)
+                                        }
+                                    }
+                                },
+                            )
+                        }
+
+                        // Start the upload process
+                        uploadChunk(file, 0)
+
                     },
                     remove: async (source, load) => {
                         let fileKey = this.uploadedFileIndex[source] ?? null
