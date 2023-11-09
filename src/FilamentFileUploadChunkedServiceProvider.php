@@ -2,7 +2,7 @@
 
 namespace OwainJones74\FilamentFileUploadChunked;
 
-use Filament\Support\Assets\Js;
+use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -20,7 +20,7 @@ class FilamentFileUploadChunkedServiceProvider extends PackageServiceProvider
     public function packageBooted()
     {
         FilamentAsset::register([
-            Js::make('file-upload-chunked', __DIR__ . '/../resources/js/file-upload-chunked.js'),
+            AlpineComponent::make('file-upload-chunked',  __DIR__ . '/../dist/file-upload-chunked.js'),
         ], 'owainjones74/filament-file-upload-chunked');
     }
 }
