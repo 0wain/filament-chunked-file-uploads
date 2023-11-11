@@ -1,6 +1,6 @@
 # Filament Chunked File Upload
 
-This packages allows for chunking file uploads. It's VERY hacky and messy, but it works (I think).
+This packages allows for chunking file uploads. It's VERY hacky and messy, but it works (I think). I wrote this package to work around the 100MB Cloudflare limit. 
 
 ## How to use
 1. Install the package using `composer require owainjones74/filament-file-upload-chunke`
