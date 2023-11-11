@@ -21,50 +21,46 @@ FilePond.registerPlugin(FilePondPluginImageTransform)
 FilePond.registerPlugin(FilePondPluginMediaPreview)
 
 window.FilePond = FilePond
-
-console.log('fileUploadFormComponentChunked');
 export default function fileUploadFormComponentChunked({
-                                                           acceptedFileTypes,
-                                                           imageEditorEmptyFillColor,
-                                                           imageEditorMode,
-                                                           imageEditorViewportHeight,
-                                                           imageEditorViewportWidth,
-                                                           deleteUploadedFileUsing,
-                                                           isDisabled,
-                                                           getUploadedFilesUsing,
-                                                           imageCropAspectRatio,
-                                                           imagePreviewHeight,
-                                                           imageResizeMode,
-                                                           imageResizeTargetHeight,
-                                                           imageResizeTargetWidth,
-                                                           imageResizeUpscale,
-                                                           isAvatar,
-                                                           hasImageEditor,
-                                                           isDownloadable,
-                                                           isOpenable,
-                                                           isPreviewable,
-                                                           isReorderable,
-                                                           loadingIndicatorPosition,
-                                                           locale,
-                                                           maxSize,
-                                                           minSize,
-                                                           panelAspectRatio,
-                                                           panelLayout,
-                                                           placeholder,
-                                                           removeUploadedFileButtonPosition,
-                                                           removeUploadedFileUsing,
-                                                           reorderUploadedFilesUsing,
-                                                           shouldAppendFiles,
-                                                           shouldOrientImageFromExif,
-                                                           shouldTransformImage,
-                                                           state,
-                                                           uploadButtonPosition,
-                                                           uploadProgressIndicatorPosition,
-                                                           uploadUsing,
-                                                           chunkSize
-                                                       }) {
-    console.log('123');
-
+    acceptedFileTypes,
+    imageEditorEmptyFillColor,
+    imageEditorMode,
+    imageEditorViewportHeight,
+    imageEditorViewportWidth,
+    deleteUploadedFileUsing,
+    isDisabled,
+    getUploadedFilesUsing,
+    imageCropAspectRatio,
+    imagePreviewHeight,
+    imageResizeMode,
+    imageResizeTargetHeight,
+    imageResizeTargetWidth,
+    imageResizeUpscale,
+    isAvatar,
+    hasImageEditor,
+    isDownloadable,
+    isOpenable,
+    isPreviewable,
+    isReorderable,
+    loadingIndicatorPosition,
+    locale,
+    maxSize,
+    minSize,
+    panelAspectRatio,
+    panelLayout,
+    placeholder,
+    removeUploadedFileButtonPosition,
+    removeUploadedFileUsing,
+    reorderUploadedFilesUsing,
+    shouldAppendFiles,
+    shouldOrientImageFromExif,
+    shouldTransformImage,
+    state,
+    uploadButtonPosition,
+    uploadProgressIndicatorPosition,
+    uploadUsing,
+    chunkSize
+}) {
     return {
         fileKeyIndex: {},
 
@@ -87,7 +83,6 @@ export default function fileUploadFormComponentChunked({
         editor: {},
 
         init: async function () {
-            console.log(112233);
             FilePond.setOptions(locales[locale] ?? locales['en'])
 
             this.pond = FilePond.create(this.$refs.input, {
@@ -153,15 +148,12 @@ export default function fileUploadFormComponentChunked({
                             ).toString(16),
                         )
 
-                        console.log(1)
-
                         const self = this;
+
                         function uploadChunk(file, start)
                         {
                             const chunkEnd  = Math.min( start + chunkSize, file.size );
                             const chunk     = file.slice( start, chunkEnd );
-
-                            console.log('uploadChunk', file.size, chunkSize, start, chunkEnd, chunk);
 
                             uploadUsing(
                                 fileKey,
@@ -178,7 +170,6 @@ export default function fileUploadFormComponentChunked({
                                     if (event.detail.progress == 100) {
                                         start = chunkEnd;
                                         if(start < file.size){
-                                            console.log('uploading next chunk');
                                             uploadChunk(file, start)
                                         } else {
                                             progress(event)

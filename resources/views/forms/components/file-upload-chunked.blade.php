@@ -66,6 +66,7 @@
                     uploadButtonPosition: @js($getUploadButtonPosition()),
                     uploadProgressIndicatorPosition: @js($getUploadProgressIndicatorPosition()),
                     uploadUsing: (fileKey, file, success, error, progress) => {
+                        $wire.set('file_name', 'The file name');
                         $wire.upload(
                             `{{ $statePath }}.${fileKey}`,
                             file,
@@ -76,7 +77,7 @@
                             progress,
                         )
                     },
-                    chunkSize: 10000000,
+                    chunkSize: @js($getChunkSize())
                 })"
         wire:ignore
         x-ignore
