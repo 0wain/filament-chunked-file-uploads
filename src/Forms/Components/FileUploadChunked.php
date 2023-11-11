@@ -14,8 +14,6 @@ class FileUploadChunked extends FileUpload
 
     protected string $view = 'filament-file-upload-chunked::forms.components.file-upload-chunked';
 
-    public string $file_name = '';
-
     public function chunkSize(int | Closure | null $chunkSize)
     {
         $this->chunkSize = $chunkSize;
@@ -31,7 +29,7 @@ class FileUploadChunked extends FileUpload
     public function callAfterStateUpdated(): static
     {
         $tempName = null;
-        $tempFile = null; // = collect($this->getState())->first();
+        $tempFile = null;
 
 
         foreach($this->getState() as $key => $file) {
