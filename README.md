@@ -3,7 +3,7 @@
 This packages allows for chunking file uploads. It's VERY hacky and messy, but it works (I think). I wrote this package to work around the 100MB Cloudflare limit. 
 
 ## How to use
-1. Install the package using `composer require owainjones74/filament-file-upload-chunke`
+1. Install the package using `composer require owainjones74/filament-file-upload-chunked`
 2. Import the package inside your Filament Resouce with `use OwainJones74\FilamentFileUploadChunked\Forms\Components\FileUploadChunked;`
 3. Replace the built in file upload with the `FileUploadChunked` class.
 
