@@ -7,6 +7,9 @@ This packages allows for chunking file uploads. It's VERY hacky and messy, but i
 2. Import the package inside your Filament Resouce with `use OwainJones74\FilamentFileUploadChunked\Forms\Components\FileUploadChunked;`
 3. Replace the built in file upload with the `FileUploadChunked` class.
 
+## Docs
+The only additional chained methed you can add when defining this component in your schema is `->chunkSize(int|closure)`. This will allow you to set the chunk size in bytes. The default is 50MB.
+
 ## Things that don't work
 - The file name is not preserved, it becomes a hash. It shows in the UI as the original file name, but once the form is submitted/saved, it shows as the hash.
 - Only a single file is allowed to be uploaded for each UI component.
