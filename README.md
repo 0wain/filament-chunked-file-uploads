@@ -1,6 +1,10 @@
 # Filament Chunked File Upload
 
+📂 Chunked file uploads for Filament PHP 🗄️ 
+
 This packages allows for chunking file uploads. It's VERY hacky and messy, but it works (I think). I wrote this package to work around the 100MB Cloudflare limit. 
+
+https://packagist.org/packages/owainjones74/filament-file-upload-chunked
 
 ## How to use
 1. Install the package using `composer require owainjones74/filament-file-upload-chunked`
